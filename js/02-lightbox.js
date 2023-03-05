@@ -13,22 +13,9 @@ const galleryLayout = galleryItems.map(({ preview, original, description }) => {
 
 gallery.insertAdjacentHTML('afterbegin', galleryLayout);
 
-gallery.addEventListener('click', onClickOpenModal);
-
-function onClickOpenModal(event) {
-
-    event.preventDefault();
-
-    if (event.target.nodeName !== "IMG") {
-        return;
-    }
-
-    const lightbox = new SimpleLightbox('.gallery a',  {
+const lightbox = new SimpleLightbox('.gallery a',  {
 
         captionsData: "alt",
         captionDelay: "250",
         captionPosition: "bottom",
-    });
-    
-}
-    
+    });  

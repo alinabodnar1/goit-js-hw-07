@@ -21,7 +21,6 @@ gallery.insertAdjacentHTML('afterbegin', galleryLayout);
 
 gallery.addEventListener('click', onClickOpenModal);
 
-
 function onClickOpenModal(event) {
 
     event.preventDefault();
@@ -30,22 +29,28 @@ function onClickOpenModal(event) {
         return;
     }
 
-    showAndCloseModal(event);
+    const closeModal = event => {
 
-} 
-
-function showAndCloseModal(e) {
-
-    const modal = basicLightbox.create(`<img src="${e.target.dataset.source}" width="800" height="600">`);
-
-    modal.show();
-
-    document.addEventListener("keydown", e => {
-
-        if (e.key === "Escape" || e.code === "Escape") {
+        if (event.key === "Escape" || event.code === "Escape") {
 
             modal.close();
         }
+        
+    }
+    const modal = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`,
+
+        {
+            onShow: modal => {
+
+                window.addEventListener('keydown', closeModal);
+            },
+
+            onClose: modal => {
+
+                window.removeEventListener('keydown', closeModal);
+            },
+         
+        });
     
-    });
-} 
+    modal.show();
+}
